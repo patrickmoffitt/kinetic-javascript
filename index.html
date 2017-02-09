@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="//d3js.org/d3.v4.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="jquery/jquery-ui.structure.min.css">
+  <link rel="stylesheet" href="jquery/jquery-ui.theme.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="jquery/plugins/jquery-resizable.min.js"></script>
+  <script src="kinetic.js"></script>
+  <title>Animated Moving Line</title>
+</head>
+<body>
+<div id="resizable" class="ui-widget-content">
+  <h3 class="ui-widget-header">Resizable</h3>
+  <div class="ui-resizable-handle ui-resizable-e"></div>
+  <div class="ui-resizable-handle ui-resizable-s"></div>
+  <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
+</div>
+<script>
+  function px2Int(px) {
+    var regex = /(\d+)/g;
+    return parseInt(px.match(regex)[0]);
+  }
+  jQuery(document).ready(function () {
+    jQuery("#resizable").resizable({
+      handleSelector: ".ui-resizable-handle",
+      onDragEnd: function (e, $el, opt) {
+        var width = px2Int($el.css("width"));
+        var height = px2Int($el.css("height"));
+        Kinetic.animateWidth = width;
+        Kinetic.animateHeight = height - 25;
+        canvas.transition()
+          .attr("width", width + "px")
+          .attr("height", (height - 25) + "px");
+      }
+    });
+    var canvas = d3.select("#resizable")
+      .append("svg")
+      .attr("id", "canvas")
+      .attr("width", "400px")
+      .attr("height", "375px");
+  });
+  jQuery("#canvas").ready(function () {
+    Kinetic.timeoutLoop(function () {
+      Kinetic.animate();
+    }, Kinetic.animateReps, Kinetic.animateDelay);
+  });
+</script>
+</body>
+</html>
