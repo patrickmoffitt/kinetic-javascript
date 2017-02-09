@@ -1,7 +1,7 @@
 # kinetic-javascript
 An animated line inside a resizable box. The movement of the line is beautiful. The interaction between the line and the moving borders of the box is interesting.
 
-I learned to code in the late 70's. Partly from my hardworking middle school Math teacher Mr. Dobbs but mainly from my father. Dad bought a TRS 80 Model II business computer and it was on this machine that I learned to write programs in the Begginer's All-Purpose Symbolic Instruction Code or BASIC. I loved everythng about it. One of my all-time favorite bits of code dates from that time and goes like this:
+I learned to code in the late 70's. Partly from my hardworking middle school Math teacher Mr. Dobbs but mainly from my father. Dad bought a TRS 80 Model II business computer and it was on this machine that I learned to write programs in the Beginner's All-Purpose Symbolic Instruction Code or BASIC. I loved everything about it. One of my all-time favorite bits of code dates from that time and goes like this:
 
     10 REM THIS IS AN EXAMPLE OF AN ANIMATED MOVING LINE
     20 GOTO40
@@ -31,7 +31,7 @@ I learned to code in the late 70's. Partly from my hardworking middle school Mat
     260 IF Y1+YJ<1 OR Y1+YJ>238 THEN YJ=-1*SGN(YJ)*(RND(W)+K)
     270 X=X+XI:Y=Y+YI:X1=X1+XJ:Y1=Y1+YJ
     280 GOTO190
-This project preserves the behavior of that code in JavaScript and adds a new feature to make it interactive. The orginal didn't feature a movable bounding box and this one does. 
+This project preserves the behavior of that code in JavaScript and adds a new feature to make it interactive. The original didn't feature a movable bounding box and this one does. 
 
 ##Credits
 This project makes use of Rick Strahl's [jquery-resizable](https://github.com/RickStrahl/jquery-resizable) project to make the bounding box mobile friendly.
