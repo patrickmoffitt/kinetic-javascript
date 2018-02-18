@@ -12,9 +12,11 @@ body {
   background-color: inherit;
   position: relative;
 }
-#resizable h3 {
+#resizable h4 {
   text-align: center;
   margin: 0 0 3px 0;
+  font-weight: normal;
+  font-size: 0.9em;
 }
 .ui-resizable-handle {
   position: absolute;

@@ -14,7 +14,7 @@
 </head>
 <body>
 <div id="resizable" class="ui-widget-content">
-  <h3 class="ui-widget-header">Resizable</h3>
+  <h4 class="ui-widget-header">Resizable</h4>
   <div class="ui-resizable-handle ui-resizable-e"></div>
   <div class="ui-resizable-handle ui-resizable-s"></div>
   <div class="ui-resizable-handle ui-resizable-se ui-icon ui-icon-gripsmall-diagonal-se"></div>
@@ -25,6 +25,11 @@
     return parseInt(px.match(regex)[0]);
   }
   jQuery(document).ready(function () {
+    var canvas = d3.select("#resizable")
+      .append("svg")
+      .attr("id", "canvas")
+      .attr("width", "100%")
+      .attr("height", "92%");
     jQuery("#resizable").resizable({
       handleSelector: ".ui-resizable-handle",
       onDragEnd: function (e, $el, opt) {
@@ -37,11 +42,6 @@
           .attr("height", (height - 25) + "px");
       }
     });
-    var canvas = d3.select("#resizable")
-      .append("svg")
-      .attr("id", "canvas")
-      .attr("width", "400px")
-      .attr("height", "375px");
   });
   jQuery("#canvas").ready(function () {
     Kinetic.timeoutLoop(function () {
