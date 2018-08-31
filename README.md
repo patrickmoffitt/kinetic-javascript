@@ -1,5 +1,5 @@
 # kinetic-javascript
-An animated line inside a resizable box. The movement of the line is beautiful. The interaction between the line and the moving borders of the box is interesting.
+An animated line inside a resizable box. The movement of the line is beautiful. The interaction between the line and the moving borders of the box is interesting. [See it yourself.](https://www.reimagize.com/kinetic) (Click for a live demo.)
 
 ![screenshot](screenshots/kinetic-javascript.jpg)
 
