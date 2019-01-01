@@ -8,26 +8,37 @@ var Kinetic = (function (d3) {
   var step = 8
   var bars = 30
   var kinetic = 4
+  var colors = ['FFFFD2', '12FFFF', 'FF12FF']
 
-  var xi = rand(step)
-  var xj = rand(step)
-  var yi = rand(step)
-  var yj = rand(step)
-
-  var x = rand(width) + 1
-  var y = rand(height) + 1
-  var x1 = rand(width) + 1
-  var y1 = rand(height) + 1
-
-  var i = 1
-  var e = 2
-
-  var a = []
-  var color = 'FFFFD2'
-  for (var n = 1; n <= bars; n++) {
-    a[n] = ['line' + n, 0, 0, 0, 0, '#' + color]
-    color = (parseInt(color, 16) - 7).toString(16)
+  function makeLines (colors) {
+    var colorIndex = 0
+    var lines = []
+    var lineIndex = 0
+    for (colorIndex in colors) {
+      lines[lineIndex] = {
+        xi: rand(step),
+        xj: rand(step),
+        yi: rand(step),
+        yj: rand(step),
+        x: rand(width) + 1,
+        y: rand(height) + 1,
+        x1: rand(width) + 1,
+        y1: rand(height) + 1,
+        i: 1,
+        e: 2,
+        a: [],
+        color: colors[colorIndex]
+      }
+      for (var n = 1; n <= bars; n++) {
+        lines[lineIndex].a[n] = ['line' + n, 0, 0, 0, 0, '#' + lines[lineIndex].color]
+        lines[lineIndex].color = (parseInt(lines[lineIndex].color, 16) - 7).toString(16)
+      }
+      lineIndex++
+    }
+    return lines
   }
+
+  var lines = makeLines(colors)
 
   function rand (max) {
     return Math.floor(Math.random() * max)
@@ -67,67 +78,77 @@ var Kinetic = (function (d3) {
     },
 
     animate: function () {
-      eraseBar(a[e])
-      a[i] = [a[i][0], x, y, x1, y1, a[i][5]]
-      drawBar(a[i])
+      for (var lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+        var lineObj = lines[lineIndex]
+        eraseBar(lineObj.a[lineObj.e])
+        lineObj.a[lineObj.i] = [
+          lineObj.a[lineObj.i][0],
+          lineObj.x,
+          lineObj.y,
+          lineObj.x1,
+          lineObj.y1,
+          lineObj.a[lineObj.i][5]
+        ]
+        drawBar(lineObj.a[lineObj.i])
 
-      i++
-      if (i > bars) {
-        i = 1
-      }
-      e++
-      if (e > bars) {
-        e = 1
-      }
+        lineObj.i++
+        if (lineObj.i > bars) {
+          lineObj.i = 1
+        }
+        lineObj.e++
+        if (lineObj.e > bars) {
+          lineObj.e = 1
+        }
 
-      if (xi === 0) {
-        xi = 1
-      }
-      if (x + xi <= 1) {
-        xi = spin(xi)
-      }
-      if (x + xi >= this.animateWidth) {
-        x = this.animateWidth
-        xi = -1 * spin(xi)
-      }
+        if (lineObj.xi === 0) {
+          lineObj.xi = 1
+        }
+        if (lineObj.x + lineObj.xi <= 1) {
+          lineObj.xi = spin(lineObj.xi)
+        }
+        if (lineObj.x + lineObj.xi >= this.animateWidth) {
+          lineObj.x = this.animateWidth
+          lineObj.xi = -1 * spin(lineObj.xi)
+        }
 
-      if (xj === 0) {
-        xj = 1
-      }
-      if (x1 + xj <= 1) {
-        xj = spin(xj)
-      }
-      if (x1 + xj >= this.animateWidth) {
-        x1 = this.animateWidth
-        xj = -1 * spin(xj)
-      }
+        if (lineObj.xj === 0) {
+          lineObj.xj = 1
+        }
+        if (lineObj.x1 + lineObj.xj <= 1) {
+          lineObj.xj = spin(lineObj.xj)
+        }
+        if (lineObj.x1 + lineObj.xj >= this.animateWidth) {
+          lineObj.x1 = this.animateWidth
+          lineObj.xj = -1 * spin(lineObj.xj)
+        }
 
-      if (yi === 0) {
-        yi = 1
-      }
-      if (y + yi <= 1) {
-        yi = spin(yi)
-      }
-      if (y + yi >= this.animateHeight) {
-        y = this.animateHeight
-        yi = -1 * spin(yi)
-      }
+        if (lineObj.yi === 0) {
+          lineObj.yi = 1
+        }
+        if (lineObj.y + lineObj.yi <= 1) {
+          lineObj.yi = spin(lineObj.yi)
+        }
+        if (lineObj.y + lineObj.yi >= this.animateHeight) {
+          lineObj.y = this.animateHeight
+          lineObj.yi = -1 * spin(lineObj.yi)
+        }
 
-      if (yj === 0) {
-        yj = 1
-      }
-      if (y1 + yj <= 1) {
-        yj = spin(yj)
-      }
-      if (y1 + yj >= this.animateHeight) {
-        y1 = this.animateHeight
-        yj = -1 * spin(yj)
-      }
+        if (lineObj.yj === 0) {
+          lineObj.yj = 1
+        }
+        if (lineObj.y1 + lineObj.yj <= 1) {
+          lineObj.yj = spin(lineObj.yj)
+        }
+        if (lineObj.y1 + lineObj.yj >= this.animateHeight) {
+          lineObj.y1 = this.animateHeight
+          lineObj.yj = -1 * spin(lineObj.yj)
+        }
 
-      x = x + xi
-      y = y + yi
-      x1 = x1 + xj
-      y1 = y1 + yj
+        lineObj.x = lineObj.x + lineObj.xi
+        lineObj.y = lineObj.y + lineObj.yi
+        lineObj.x1 = lineObj.x1 + lineObj.xj
+        lineObj.y1 = lineObj.y1 + lineObj.yj
+      }
     }
   }
 })(d3)
